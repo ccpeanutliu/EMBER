@@ -3,7 +3,7 @@ My research of EMBER dataset
 
 ### EMBER可以用了！請使用My_Ember資料夾中classify.py，使用方法:
 ```
-python3 grab_data.py ./dir
+python3 classify.py ./dir
 ```
 或
 ```
