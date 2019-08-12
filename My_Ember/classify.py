@@ -301,16 +301,8 @@ def gen_num(total):
     return output
 
 def gen_stoi(total):
-    w2v_model = Word2Vec.load('/home/imccpeanut/Ember_Test/My_Ember/large_w2v.model')
-    '''
-    embedding_matrix = np.zeros((len(w2v_model.wv.vocab.items()) + 1, w2v_model.vector_size))
-    word2idx = {}
-    vocab_list = [(word, w2v_model.wv[word]) for word, _ in w2v_model.wv.vocab.items()]
-    for i, vocab in enumerate(vocab_list):
-        word, vec = vocab
-        embedding_matrix[i + 1] = vec
-        word2idx[word] = i + 1
-    '''
+    w2v_model = Word2Vec.load('./Ember_Model/large_w2v.model')
+    
     def text_to_index(corpus):
         np.random.seed(1230)
         new_corpus = []
@@ -385,7 +377,7 @@ if __name__ == '__main__':
     
     
     use = np.hstack((o1,o2))
-    model = load_model("/home/imccpeanut/Ember_Test/My_Ember/No_Byteentropy.h5")
+    model = load_model("./Ember_Model/No_Byteentropy.h5")
     np.random.seed(1230)
     prediction = model.predict(use)
     n = len(prediction)
