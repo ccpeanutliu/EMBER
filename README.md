@@ -9,4 +9,5 @@ python3 grab_data.py ./dir
 ```
 python3 classify.py ./file1 ./file2 ...
 ```
-required Model_Ember, numpy, pefile, re, matplotlib, keras, gensim
+Required Model_Ember, numpy, pefile, re, matplotlib, keras, gensim
+Model_Ember: https://drive.google.com/file/d/1-DJaqpqUYsPIm-Zix9EPBrbgo76GtQq6/view?usp=sharing
