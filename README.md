@@ -1,6 +1,17 @@
 # EMBER
 My research of EMBER dataset
 
+### EMBER的資料生成程式已完成，在My_Ember資料夾中，使用方法:
+
+```
+python3 ember_jsonl.py b/m/n ./dir
+```
+或
+```
+python3 ember_jsonl.py b/m/n ./file1 ./file2 ...
+```
+其中 b 代表benign、m 代表malware、n 代表沒有label(for no supervised training)
+
 ### EMBER可以用了！請使用My_Ember資料夾中classify.py，使用方法:
 ```
 python3 classify_hash.py ./dir
