@@ -20,9 +20,7 @@ from matplotlib.pyplot import hist
 import matplotlib.pyplot as plt
 import jsonlines
 from keras.models import load_model
-from gensim.models import Word2Vec
-from keras.preprocessing.sequence import pad_sequences
-from keras.layers import Embedding
+import yara
 
 def strings(filename, min=5):
     with open(filename, errors="ignore") as f:  # Python 3.x
@@ -126,7 +124,7 @@ def gen_general(mypath):
 
         except:
             continue
-    #general = arr[0]
+    general = arr[0]
     return arr[0]
 
 def gen_strings(mypath):    
@@ -326,6 +324,11 @@ def gen_stoi(total):
     output = np.array(output)
     return output
         
+def gen_yara(rule_path, fpath):
+    rules = yara.compile(rule_path)
+    with open(fpath, 'rb') as f:
+        matches = rules.match(data=f.read())
+    return matches
     
 # In[57]:
 
@@ -334,6 +337,7 @@ if __name__ == '__main__':
     keys_strings = ['avlength', 'numstrings', 'registry', 'urls', 'MZ', 'printables', 'entropy', 'paths', 'printabledist']
     keys_general = ['exports', 'has_resources', 'imports', 'symbols', 'has_signature', 'has_relocations', 'has_debug', 'vsize', 'size', 'has_tls']
     json_save = []
+    yara_save = []
     argc = len(sys.argv)
     df = True
     for i in range(1, argc):
@@ -345,6 +349,7 @@ if __name__ == '__main__':
             mypath = sys.argv[i]
             tmp = gen_total(mypath)
             json_save.append(tmp)
+            yara_save.append(gen_yara("./yargen_rules.yar",mypath))
             name.append(mypath)
         
     elif (not df) and argc == 2:
@@ -352,9 +357,11 @@ if __name__ == '__main__':
         files = listdir(fpath)
         for f in files:
             mypath = fpath + '/' + f
+            print(f)
             tmp = gen_total(mypath)
             json_save.append(tmp)
-            name.append(mypath)
+            yara_save.append(gen_yara("./yargen_rules.yar",mypath))
+            name.append(f)
 
     else:
         sys.exit("\nPlease enter files' name seperated by space or a direction name ! \n")
@@ -366,10 +373,15 @@ if __name__ == '__main__':
     print(o1.shape,o2.shape)
     use = np.hstack((o1,o2))
     model = load_model("/home/imccpeanut/Ember_Test/My_Ember/Feature_hash.h5")
-    #np.random.seed(1230)
+    np.random.seed(1230)
     prediction = model.predict(use)
     n = len(prediction)
     
     print("\n# # # # The Result ( Dangerous score 0 ~ 1) # # # #\n")
     for i in range(n):
         print(name[i],"\t" ,prediction[i][0])
+    for i in range(n):
+        if prediction[i][0] < 0.5 and yara_save[i] != []:
+            print("\nThough it seems that "+ name[i] +" isn't dangerous, but it hits some yara rule!!!\n")
+            for j in yara_save[i]:
+                print(j)
