@@ -12,3 +12,5 @@ python3 classify_hash.py ./file1 ./file2 ...
 Required Model_Ember, numpy, pefile, re, matplotlib, keras
 
 2019/8/14 Update：加入了yara rule，新增了classify_hash.py、yargen_rules.py
+
+### 不要用classify.py，那個是錯的。
