@@ -29,3 +29,8 @@ Required Model_Ember, numpy, pefile, re, matplotlib, keras
 2019/8/14 Update：加入了yara rule，新增了classify_hash.py、yargen_rules.py
 
 ### 不要用classify.py，那個是錯的。
+
+## 結合了yara rule，詳情請參閱 [yarGen](https://github.com/Neo23x0/yarGen)
+這是一個可以自動生成yara rule的python2程式，詳情直接進去看就可以了
+
+[yarGen指令](https://www.kitploit.com/2015/07/yargen-generator-for-yara-rules-for.html)
